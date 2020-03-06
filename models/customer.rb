@@ -46,6 +46,29 @@ class Customer
 
   end
 
+  def buy_tickets
+
+    sql = "SELECT films.price FROM films
+           INNER JOIN tickets
+           ON film_id = films.id
+           WHERE customer_id = $1"
+    values = [@id]
+    films = SqlRunner.run( sql, values )
+    films = films.reduce(0) {|total,film| total + film["price"].to_i}
+    return @funds -= films
+
+  end
+
+  def ticket_number
+
+    sql = "SELECT tickets.customer_id FROM tickets
+           WHERE customer_id = $1"
+    values = [@id]
+    tickets = SqlRunner.run( sql, values )
+    tickets = tickets.map{|ticket| ticket["customer_id"]}
+    return tickets.size()
+  end
+
   def self.find_all()
 
     sql = "SELECT * FROM customers"
