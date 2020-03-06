@@ -67,6 +67,7 @@ class Customer
     tickets = SqlRunner.run( sql, values )
     tickets = tickets.map{|ticket| ticket["customer_id"]}
     return tickets.size()
+
   end
 
   def self.find_all()

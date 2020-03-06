@@ -2,10 +2,12 @@ require_relative( "db/sqlrunner.rb" )
 require_relative( "models/customer.rb" )
 require_relative( "models/film.rb" )
 require_relative( "models/ticket.rb" )
+require_relative( "models/screening.rb" )
 
 require( "pry-byebug" )
 
 Ticket.delete_all()
+Screening.delete_all()
 Customer.delete_all()
 Film.delete_all()
 
@@ -36,10 +38,20 @@ ticket2.save()
 ticket3.save()
 ticket4.save()
 
-
-
 # ticket1.customer_id = customer2.id
 # ticket1.update()
+
+screening1 = Screening.new({"show_time" => "18:00", "film_id" => film1.id()})
+screening2 = Screening.new({"show_time" => "19:00", "film_id" => film1.id()})
+screening3 = Screening.new({"show_time" => "16:00", "film_id" => film2.id()})
+screening4 = Screening.new({"show_time" => "18:00", "film_id" => film2.id()})
+
+screening1.save()
+screening2.save()
+screening3.save()
+screening4.save()
+
+
 
 binding.pry()
 nil
