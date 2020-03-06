@@ -1,5 +1,5 @@
 class Screening
-  attr_accessor( :show_time, :film_id )
+  attr_accessor( :show_time, :ticket_id )
   attr_reader( :id )
 
   def initialize( options )
@@ -29,10 +29,18 @@ class Screening
 
   def update
 
-    sql = "UPDATE screenings SET show_time = $1, film_id = $2 WHERE id = $3"
+    sql = "UPDATE screenings SET show_time = $1, film_id = $2 WHERE id = $4"
     values = [@show_time, @film_id, @id]
     SqlRunner.run( sql, values )
 
+  end
+
+  def self.find_by_id( id )
+
+    sql = "SELECT * FROM screenings WHERE id = $1"
+    values = [id]
+    screening = SqlRunner.run( sql, values ).first
+    return screening = Screening.new( screening )
   end
 
   def self.all()
