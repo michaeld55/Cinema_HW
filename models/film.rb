@@ -44,14 +44,13 @@ class Film
            GROUP BY screening_id"
     values = [@id]
     screenings = SqlRunner.run( sql, values )
-
-      screenings = screenings.map { |screening| {"number" => screening["count"].to_i, "id" => screening["screening_id"].to_i}}
-      screenings = screenings.max_by(){ |screening| screening["number"]}
+    screenings = screenings.map { |screening| {"number" => screening["count"].to_i, "id" => screening["screening_id"].to_i}}
+    screenings = screenings.max_by(){ |screening| screening["number"]}
     if screenings != nil
       popular_time = Screening.find_by_id( screenings["id"])
-      return popular_time.show_time
+      return "The most popular time for #{@title} is #{popular_time.show_time}"
     else
-      puts "There are no tickets for #{@title}"
+      return "There are no tickets for #{@title}"
     end
 
   end

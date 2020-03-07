@@ -6,7 +6,6 @@ class Ticket
 
   attr_reader( :id )
   attr_accessor( :customer_id, :screening_id )
-# ticket1 = Ticket.new({ "customer_id" => customer1.id(), "screening_id" => screening1.id() })
   def initialize( options )
 
     @id = options['id'].to_i if options['id']
