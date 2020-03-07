@@ -5,14 +5,13 @@ require_relative("ticket.rb")
 class Film
 
   attr_reader( :id )
-  attr_accessor( :title, :price, :show_time )
+  attr_accessor( :title, :price )
 
   def initialize( options )
 
-    @id = options["id"].to_i if options["id"]
+    @id = options["id"].to_i if options["id"].to_i
     @title = options["title"]
     @price = options["price"].to_i()
-    @show_time = options["show_time"]
 
   end
 
@@ -79,6 +78,14 @@ class Film
     tickets = tickets.map{|ticket| ticket["film_id"]}
     return tickets.size()
 
+  end
+
+  def self.find_by_id( id )
+
+    sql = "SELECT * FROM films WHERE id = $1"
+    values = [id]
+    film = SqlRunner.run( sql, values ).first
+    return film = Film.new( film )
   end
 
   def self.find_all()

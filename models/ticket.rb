@@ -17,19 +17,20 @@ class Ticket
 
   def save()
 
-    sql = "INSERT INTO tickets
-    (
-      customer_id,
-      screening_id
-    )
-    VALUES
-    (
-      $1, $2
-    )
-    RETURNING id"
-    values = [@customer_id, @screening_id]
-    ticket = SqlRunner.run( sql, values ).first()
-    @id = ticket['id'].to_i
+      sql = "INSERT INTO tickets
+      (
+        customer_id,
+        screening_id
+      )
+      VALUES
+      (
+        $1, $2
+      )
+      RETURNING id"
+      values = [@customer_id, @screening_id]
+      ticket = SqlRunner.run( sql, values ).first()
+      @id = ticket['id'].to_i
+      # Customer.buy_ticket( @screening_id, @customer_id)
 
   end
 

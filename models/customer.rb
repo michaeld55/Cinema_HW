@@ -1,6 +1,7 @@
 require_relative("../db/sqlrunner.rb")
 require_relative("film.rb")
 require_relative("ticket.rb")
+require_relative("screening.rb")
 
 class Customer
 
@@ -53,23 +54,6 @@ class Customer
 
   end
 
-  def buy_tickets
-
-    sql = "SELECT films.price FROM films
-           INNER JOIN screenings
-           ON screenings.film_id = (films.id)
-           INNER JOIN tickets
-           ON tickets.screening_id = (screenings.id)
-           INNER JOIN customers
-           ON tickets.customer_id = (customers.id)
-           WHERE customer_id = $1"
-    values = [@id]
-    films = SqlRunner.run( sql, values )
-    films = films.reduce(0) {|total,film| total + film["price"].to_i}
-    return @funds -= films
-
-  end
-
   def ticket_number
 
     sql = "SELECT tickets.customer_id FROM tickets
@@ -79,6 +63,32 @@ class Customer
     tickets = tickets.map{|ticket| ticket["customer_id"]}
     return tickets.size()
 
+  end
+
+  def self.buy_ticket( screening, customer )
+    
+    film = Film.find_by_id( screening.film_id)
+    cost = film.price
+    if screening.available_tickets > 0
+        screening.available_tickets -= 1
+        Screening.update_available_tickets( screening )
+        customer.funds -= cost
+        puts "There are #{screening.available_tickets} tickets left for #{film.title}"
+        return true
+      else
+        puts "No tickets for #{film.title}"
+        return false
+    end
+
+  end
+
+  def self.find_by_id( id )
+
+    sql = "SELECT * FROM customers WHERE id = $1"
+    values = [id]
+    customer = SqlRunner.run( sql, values ).first
+    customer = Customer.new( customer )
+    return customer
   end
 
   def self.find_all()

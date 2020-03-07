@@ -13,8 +13,10 @@ Film.delete_all()
 
 customer1 = Customer.new({ "name" => "Bob McJoe", "funds" => 2000})
 customer2 = Customer.new({ "name" => "Joe McBob", "funds" => 3000})
+customer3 = Customer.new({ "name" => "Tim McTam", "funds" => 3000})
 customer1.save()
 customer2.save()
+customer3.save()
 
 # customer1.name = "Joe McBob"
 # customer1.update()
@@ -27,10 +29,10 @@ film2.save()
 
 # film1.title = "Small Movie"
 # film1.update()
-screening1 = Screening.new({"show_time" => "18:00", "film_id" => film1.id()})
-screening2 = Screening.new({"show_time" => "19:00", "film_id" => film1.id()})
-screening3 = Screening.new({"show_time" => "16:00", "film_id" => film2.id()})
-screening4 = Screening.new({"show_time" => "18:00", "film_id" => film2.id()})
+screening1 = Screening.new({ "show_time" => "18:00", "film_id" => film1.id(), "available_tickets" => 1 })
+screening2 = Screening.new({ "show_time" => "19:00", "film_id" => film1.id(), "available_tickets" => 50 })
+screening3 = Screening.new({ "show_time" => "16:00", "film_id" => film2.id(), "available_tickets" => 50 })
+screening4 = Screening.new({ "show_time" => "18:00", "film_id" => film2.id(), "available_tickets" => 50 })
 
 
 screening1.save()
@@ -45,14 +47,23 @@ ticket1 = Ticket.new({ "customer_id" => customer1.id(), "screening_id" => screen
 ticket2 = Ticket.new({ "customer_id" => customer2.id(), "screening_id" => screening2.id() })
 ticket3 = Ticket.new({ "customer_id" => customer1.id(), "screening_id" => screening3.id() })
 ticket4 = Ticket.new({ "customer_id" => customer1.id(), "screening_id" => screening4.id() })
-ticket5 = Ticket.new({ "customer_id" => customer2.id(), "screening_id" => screening2.id() })
+ticket5 = Ticket.new({ "customer_id" => customer3.id(), "screening_id" => screening1.id() })
 
-ticket1.save()
-ticket2.save()
-ticket3.save()
+if Customer.buy_ticket( screening1, customer1) == true
+  ticket1.save()
+end
+if Customer.buy_ticket( screening2, customer2) == true
+  ticket2.save()
+end
+if Customer.buy_ticket( screening2, customer1) == true
+  ticket3.save()
+end
+if Customer.buy_ticket( screening2, customer1) == true
 ticket4.save()
-ticket5.save()
-
+end
+if Customer.buy_ticket( screening1, customer3) == true
+  ticket5.save()
+end
 # ticket1.customer_id = customer2.id
 # ticket1.update()
 
