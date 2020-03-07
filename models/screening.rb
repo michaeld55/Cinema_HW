@@ -57,15 +57,15 @@ class Screening
     return screening = Screening.new( screening )
 
   end
-
-  def self.find_by_film_id( id )
-
-    sql = "SELECT * FROM screenings WHERE film_id = $1"
-    values = [id]
-    screening = SqlRunner.run( sql, values ).first
-    return screening = Screening.new( screening )
-
-  end
+  # 
+  # def self.find_by_film_id( id )
+  #
+  #   sql = "SELECT * FROM screenings WHERE film_id = $1"
+  #   values = [id]
+  #   screening = SqlRunner.run( sql, values ).first
+  #   return screening = Screening.new( screening )
+  #
+  # end
 
   def self.all()
 

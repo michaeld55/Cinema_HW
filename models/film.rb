@@ -36,12 +36,23 @@ class Film
 
     sql = "SELECT screening_id, COUNT (*)
            FROM tickets
+           INNER JOIN screenings
+           ON screening_id = (screenings.id)
+           INNER JOIN films
+           ON film_id = (films.id)
+           WHERE film_id = $1
            GROUP BY screening_id"
-    screenings = SqlRunner.run( sql )
-    screenings = screenings.map { |screening| {"number" => screening["count"].to_i, "id" => screening["screening_id"].to_i}}
-    screenings = screenings.max_by(){ |screening| screening["number"]}
-    popular_time = Screening.find_by_id( screenings["id"])
-    return popular_time.show_time
+    values = [@id]
+    screenings = SqlRunner.run( sql, values )
+
+      screenings = screenings.map { |screening| {"number" => screening["count"].to_i, "id" => screening["screening_id"].to_i}}
+      screenings = screenings.max_by(){ |screening| screening["number"]}
+    if screenings != nil
+      popular_time = Screening.find_by_id( screenings["id"])
+      return popular_time.show_time
+    else
+      puts "There are no tickets for #{@title}"
+    end
 
   end
 

@@ -45,8 +45,8 @@ screening4.save()
 
 ticket1 = Ticket.new({ "customer_id" => customer1.id(), "screening_id" => screening1.id() })
 ticket2 = Ticket.new({ "customer_id" => customer2.id(), "screening_id" => screening2.id() })
-ticket3 = Ticket.new({ "customer_id" => customer1.id(), "screening_id" => screening3.id() })
-ticket4 = Ticket.new({ "customer_id" => customer1.id(), "screening_id" => screening4.id() })
+ticket3 = Ticket.new({ "customer_id" => customer1.id(), "screening_id" => screening2.id() })
+ticket4 = Ticket.new({ "customer_id" => customer1.id(), "screening_id" => screening2.id() })
 ticket5 = Ticket.new({ "customer_id" => customer3.id(), "screening_id" => screening1.id() })
 
 if Customer.buy_ticket( screening1, customer1) == true

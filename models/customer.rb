@@ -66,7 +66,7 @@ class Customer
   end
 
   def self.buy_ticket( screening, customer )
-    
+
     film = Film.find_by_id( screening.film_id)
     cost = film.price
     if screening.available_tickets > 0
@@ -89,6 +89,7 @@ class Customer
     customer = SqlRunner.run( sql, values ).first
     customer = Customer.new( customer )
     return customer
+    
   end
 
   def self.find_all()
