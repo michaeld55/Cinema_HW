@@ -46,7 +46,7 @@ class Screening
     SqlRunner.run( sql, values )
     # puts screening.available_tickets
     # @available_tickets = screening.available_tickets
-    puts @available_tickets
+    # puts @available_tickets
   end
 
   def self.find_by_id( id )
@@ -57,7 +57,7 @@ class Screening
     return screening = Screening.new( screening )
 
   end
-  # 
+  #
   # def self.find_by_film_id( id )
   #
   #   sql = "SELECT * FROM screenings WHERE film_id = $1"

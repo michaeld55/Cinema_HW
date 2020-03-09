@@ -29,7 +29,6 @@ class Ticket
       values = [@customer_id, @screening_id]
       ticket = SqlRunner.run( sql, values ).first()
       @id = ticket['id'].to_i
-      # Customer.buy_ticket( @screening_id, @customer_id)
 
   end
 
