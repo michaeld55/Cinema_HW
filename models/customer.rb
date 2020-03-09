@@ -73,6 +73,7 @@ class Customer
         screening.available_tickets -= 1
         Screening.update_available_tickets( screening )
         customer.funds -= cost
+        update()
         puts "There are #{screening.available_tickets} tickets left for #{film.title}"
         return true
       else
@@ -89,7 +90,7 @@ class Customer
     customer = SqlRunner.run( sql, values ).first
     customer = Customer.new( customer )
     return customer
-    
+
   end
 
   def self.find_all()
